@@ -12207,34 +12207,56 @@ var API_KEY = "live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyz
  *  - Each option should display text equal to the name of the breed.
  * This function should execute immediately.
  */
-function initialLoad(_x) {
+function initialLoad() {
   return _initialLoad.apply(this, arguments);
 }
 function _initialLoad() {
-  _initialLoad = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(params) {
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) switch (_context.prev = _context.next) {
+  _initialLoad = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    var response, jsonData;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          fetch("https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8").then(function (response) {
-            return response.json();
-          }).then(function (data) {
-            // const catBreeds = data.map(catBreedList);
-            console.log(data);
-            data.forEach(function (element) {
-              var option = document.createElement("option");
-              option.text = element.breeds[0].name;
-              option.value = element.breeds[0].name;
-              console.log(option);
-              breedSelect.appendChild(option);
-            });
+          _context2.next = 2;
+          return fetch("https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8");
+        case 2:
+          response = _context2.sent;
+          _context2.next = 5;
+          return response.json();
+        case 5:
+          jsonData = _context2.sent;
+          console.log(jsonData);
+          jsonData.forEach(function (element) {
+            var option = document.createElement("option");
+            option.text = element.breeds[0].name;
+            option.value = element.id;
+            option.src = element.url;
+            breedSelect.appendChild(option);
+            breedSelect.addEventListener("change", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+              var cat;
+              return _regeneratorRuntime().wrap(function _callee$(_context) {
+                while (1) switch (_context.prev = _context.next) {
+                  case 0:
+                    console.log(option.value);
+                    // let catInfo = await fetch(
+                    //     `https://api.thecatapi.com/v1/images/${option.value}`
+                    // );
 
-            // console.log(catBreeds);
+                    console.log(option.src);
+                    console.log(option.text);
+                    cat = Carousel.createCarouselItem(option.src, option.text, option.value);
+                    Carousel.appendCarousel(cat);
+                  case 5:
+                  case "end":
+                    return _context.stop();
+                }
+              }, _callee);
+            })));
           });
-        case 1:
+        case 8:
         case "end":
-          return _context.stop();
+          return _context2.stop();
       }
-    }, _callee);
+    }, _callee2);
   }));
   return _initialLoad.apply(this, arguments);
 }
@@ -12253,6 +12275,7 @@ initialLoad();
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
+Carousel.createCarouselItem();
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
@@ -12305,7 +12328,7 @@ initialLoad();
  *   you delete that favourite using the API, giving this function "toggle" functionality.
  * - You can call this function by clicking on the heart at the top right of any image.
  */
-function favourite(_x2) {
+function favourite(_x) {
   return _favourite.apply(this, arguments);
 }
 /**
@@ -12325,14 +12348,14 @@ function favourite(_x2) {
  *   your code should account for this.
  */
 function _favourite() {
-  _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(imgId) {
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
+  _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(imgId) {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
         case 0:
         case "end":
-          return _context2.stop();
+          return _context3.stop();
       }
-    }, _callee2);
+    }, _callee3);
   }));
   return _favourite.apply(this, arguments);
 }
@@ -12430,7 +12453,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51058" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61671" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

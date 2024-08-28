@@ -22,25 +22,40 @@ const API_KEY =
  *  - Each option should display text equal to the name of the breed.
  * This function should execute immediately.
  */
-async function initialLoad(params) {
-    fetch(
+
+async function initialLoad() {
+    const response = await fetch(
         "https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"
-    )
-        .then((response) => response.json())
-        .then((data) => {
-            // const catBreeds = data.map(catBreedList);
-            console.log(data);
-            data.forEach((element) => {
-                const option = document.createElement("option");
-                option.text = element.breeds[0].name;
-                option.value = element.breeds[0].name;
+    );
+    const jsonData = await response.json();
+    console.log(jsonData);
 
-                console.log(option);
-                breedSelect.appendChild(option);
-            });
+    jsonData.forEach((element) => {
+        const option = document.createElement("option");
+        option.text = element.breeds[0].name;
+        option.value = element.id;
+        option.src = element.url;
 
-            // console.log(catBreeds);
+        breedSelect.appendChild(option);
+
+        breedSelect.addEventListener("change", async function () {
+            console.log(option.value);
+            // let catInfo = await fetch(
+            //     `https://api.thecatapi.com/v1/images/${option.value}`
+            // );
+
+            console.log(option.src);
+            console.log(option.text);
+
+            let cat = Carousel.createCarouselItem(
+                option.src,
+                option.text,
+                option.value
+            );
+            Carousel.appendCarousel(cat);
+            return option;
         });
+    });
 }
 
 initialLoad();
@@ -58,6 +73,9 @@ initialLoad();
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
+Carousel.createCarouselItem();
+
+infoDump.innerHTML = `${option.text}`;
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
