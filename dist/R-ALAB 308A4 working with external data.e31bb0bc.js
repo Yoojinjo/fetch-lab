@@ -12297,29 +12297,11 @@ function _initialLoad() {
           jsonData.forEach(function (element) {
             var option = document.createElement("option");
             option.text = element.breeds[0].name;
-            option.value = element.id;
+            option.value = element.breeds[0].id;
             option.src = element.url;
             breedSelect.appendChild(option);
-            breedSelect.addEventListener("change", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-              var cat;
-              return _regeneratorRuntime().wrap(function _callee$(_context) {
-                while (1) switch (_context.prev = _context.next) {
-                  case 0:
-                    console.log(option.value);
-                    // let catInfo = await fetch(
-                    //     `https://api.thecatapi.com/v1/images/${option.value}`
-                    // );
-
-                    console.log(option.src);
-                    console.log(option.text);
-                    cat = Carousel.createCarouselItem(option.src, option.text, option.value);
-                    Carousel.appendCarousel(cat);
-                  case 5:
-                  case "end":
-                    return _context.stop();
-                }
-              }, _callee);
-            })));
+            breedSelect.addEventListener("change", getCats);
+            // getCats()
           });
         case 8:
         case "end":
@@ -12344,7 +12326,54 @@ initialLoad();
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
-Carousel.createCarouselItem();
+function getCats() {
+  return _getCats.apply(this, arguments);
+}
+function _getCats() {
+  _getCats = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+    var catList;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          console.log(breedSelect.value);
+          // console.log(option.value);
+          _context3.next = 3;
+          return fetch("https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=".concat(breedSelect.value, "&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"));
+        case 3:
+          catList = _context3.sent;
+          _context3.next = 6;
+          return catList.json();
+        case 6:
+          catList = _context3.sent;
+          console.log(catList, "dsd");
+
+          // let cat = Carousel.createCarouselItem(
+          //     option.src,
+          //     option.text,
+          //     option.value
+          // );
+          // Carousel.appendCarousel(cat);
+        case 8:
+        case "end":
+          return _context3.stop();
+      }
+    }, _callee3);
+  }));
+  return _getCats.apply(this, arguments);
+}
+Carousel.clear();
+// Carousel.start();
+breedSelect.addEventListener("DOMContentLoaded", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+  return _regeneratorRuntime().wrap(function _callee$(_context) {
+    while (1) switch (_context.prev = _context.next) {
+      case 0:
+        Carousel.appendCarousel(cat);
+      case 1:
+      case "end":
+        return _context.stop();
+    }
+  }, _callee);
+})));
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
@@ -12417,14 +12446,14 @@ function favourite(_x) {
  *   your code should account for this.
  */
 function _favourite() {
-  _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(imgId) {
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-      while (1) switch (_context3.prev = _context3.next) {
+  _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(imgId) {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
         case 0:
         case "end":
-          return _context3.stop();
+          return _context4.stop();
       }
-    }, _callee3);
+    }, _callee4);
   }));
   return _favourite.apply(this, arguments);
 }
@@ -12453,7 +12482,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61671" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58044" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

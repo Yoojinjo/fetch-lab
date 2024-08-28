@@ -33,28 +33,13 @@ async function initialLoad() {
     jsonData.forEach((element) => {
         const option = document.createElement("option");
         option.text = element.breeds[0].name;
-        option.value = element.id;
+        option.value = element.breeds[0].id;
         option.src = element.url;
 
         breedSelect.appendChild(option);
 
-        breedSelect.addEventListener("change", async function () {
-            console.log(option.value);
-            // let catInfo = await fetch(
-            //     `https://api.thecatapi.com/v1/images/${option.value}`
-            // );
-
-            console.log(option.src);
-            console.log(option.text);
-
-            let cat = Carousel.createCarouselItem(
-                option.src,
-                option.text,
-                option.value
-            );
-            Carousel.appendCarousel(cat);
-            return option;
-        });
+        breedSelect.addEventListener("change", getCats);
+        // getCats()
     });
 }
 
@@ -73,9 +58,33 @@ initialLoad();
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
-Carousel.createCarouselItem();
+async function getCats() {
+    console.log(breedSelect.value);
+    // console.log(option.value);
+    let catList = await fetch(
+        `https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=${breedSelect.value}&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8`
+    );
+    catList = await catList.json();
+    console.log(catList);
 
-infoDump.innerHTML = `${option.text}`;
+    catList.forEach((element) => {
+        const option = document.createElement("option");
+        option.text = element.breeds[0].name;
+        option.value = element.breeds[0].id;
+        option.src = element.url;    
+    // let cat = Carousel.createCarouselItem(
+    //     option.src,
+    //     option.text,
+    //     option.value
+    // );
+    // Carousel.appendCarousel(cat);
+}
+
+Carousel.clear();
+// Carousel.start();
+breedSelect.addEventListener("DOMContentLoaded", async function () {
+    Carousel.appendCarousel(cat);
+});
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."

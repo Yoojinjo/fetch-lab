@@ -12245,7 +12245,8 @@ function _initialLoad() {
                     console.log(option.text);
                     cat = Carousel.createCarouselItem(option.src, option.text, option.value);
                     Carousel.appendCarousel(cat);
-                  case 5:
+                    return _context.abrupt("return", option);
+                  case 6:
                   case "end":
                     return _context.stop();
                 }
@@ -12276,6 +12277,9 @@ initialLoad();
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
 Carousel.createCarouselItem();
+Carousel.clear();
+Carousel.start();
+Carousel.infoDump.innerHTML = "".concat(option.text);
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
@@ -12453,7 +12457,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61671" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58044" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
