@@ -28,7 +28,7 @@ async function initialLoad() {
         "https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"
     );
     const jsonData = await response.json();
-    console.log(jsonData);
+    // console.log(jsonData);
 
     jsonData.forEach((element) => {
         const option = document.createElement("option");
@@ -67,24 +67,24 @@ async function getCats() {
     catList = await catList.json();
     console.log(catList);
 
-    catList.forEach((element) => {
-        const option = document.createElement("option");
-        option.text = element.breeds[0].name;
-        option.value = element.breeds[0].id;
-        option.src = element.url;    
-    // let cat = Carousel.createCarouselItem(
-    //     option.src,
-    //     option.text,
-    //     option.value
-    // );
-    // Carousel.appendCarousel(cat);
+    catList.forEach((cat) => {
+        console.log(cat.url);
+        console.log(cat.breeds[0].id);
+        console.log(cat.id);
+        let card = Carousel.createCarouselItem(
+            cat.url,
+            cat.breeds[0].id,
+            cat.id
+        );
+        Carousel.appendCarousel(card);
+    });
 }
 
 Carousel.clear();
 // Carousel.start();
-breedSelect.addEventListener("DOMContentLoaded", async function () {
-    Carousel.appendCarousel(cat);
-});
+// breedSelect.addEventListener("DOMContentLoaded", async function () {
+//     Carousel.appendCarousel(cat);
+// });
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."

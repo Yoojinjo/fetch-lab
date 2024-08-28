@@ -12280,20 +12280,21 @@ function initialLoad() {
   return _initialLoad.apply(this, arguments);
 }
 function _initialLoad() {
-  _initialLoad = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+  _initialLoad = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
     var response, jsonData;
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
         case 0:
-          _context2.next = 2;
+          _context.next = 2;
           return fetch("https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8");
         case 2:
-          response = _context2.sent;
-          _context2.next = 5;
+          response = _context.sent;
+          _context.next = 5;
           return response.json();
         case 5:
-          jsonData = _context2.sent;
-          console.log(jsonData);
+          jsonData = _context.sent;
+          // console.log(jsonData);
+
           jsonData.forEach(function (element) {
             var option = document.createElement("option");
             option.text = element.breeds[0].name;
@@ -12303,11 +12304,11 @@ function _initialLoad() {
             breedSelect.addEventListener("change", getCats);
             // getCats()
           });
-        case 8:
+        case 7:
         case "end":
-          return _context2.stop();
+          return _context.stop();
       }
-    }, _callee2);
+    }, _callee);
   }));
   return _initialLoad.apply(this, arguments);
 }
@@ -12330,50 +12331,42 @@ function getCats() {
   return _getCats.apply(this, arguments);
 }
 function _getCats() {
-  _getCats = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+  _getCats = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
     var catList;
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-      while (1) switch (_context3.prev = _context3.next) {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
         case 0:
           console.log(breedSelect.value);
           // console.log(option.value);
-          _context3.next = 3;
+          _context2.next = 3;
           return fetch("https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=".concat(breedSelect.value, "&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"));
         case 3:
-          catList = _context3.sent;
-          _context3.next = 6;
+          catList = _context2.sent;
+          _context2.next = 6;
           return catList.json();
         case 6:
-          catList = _context3.sent;
-          console.log(catList, "dsd");
-
-          // let cat = Carousel.createCarouselItem(
-          //     option.src,
-          //     option.text,
-          //     option.value
-          // );
-          // Carousel.appendCarousel(cat);
-        case 8:
+          catList = _context2.sent;
+          console.log(catList);
+          catList.forEach(function (cat) {
+            console.log(cat.url);
+            console.log(cat.breeds[0].id);
+            console.log(cat.id);
+            var card = Carousel.createCarouselItem(cat.url, cat.breeds[0].id, cat.id);
+            Carousel.appendCarousel(card);
+          });
+        case 9:
         case "end":
-          return _context3.stop();
+          return _context2.stop();
       }
-    }, _callee3);
+    }, _callee2);
   }));
   return _getCats.apply(this, arguments);
 }
 Carousel.clear();
 // Carousel.start();
-breedSelect.addEventListener("DOMContentLoaded", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-  return _regeneratorRuntime().wrap(function _callee$(_context) {
-    while (1) switch (_context.prev = _context.next) {
-      case 0:
-        Carousel.appendCarousel(cat);
-      case 1:
-      case "end":
-        return _context.stop();
-    }
-  }, _callee);
-})));
+// breedSelect.addEventListener("DOMContentLoaded", async function () {
+//     Carousel.appendCarousel(cat);
+// });
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
@@ -12446,14 +12439,14 @@ function favourite(_x) {
  *   your code should account for this.
  */
 function _favourite() {
-  _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(imgId) {
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-      while (1) switch (_context4.prev = _context4.next) {
+  _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(imgId) {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
         case 0:
         case "end":
-          return _context4.stop();
+          return _context3.stop();
       }
-    }, _callee4);
+    }, _callee3);
   }));
   return _favourite.apply(this, arguments);
 }
