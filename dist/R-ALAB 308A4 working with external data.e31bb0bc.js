@@ -12274,11 +12274,11 @@ var API_KEY = "live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyz
  * - Create new <options> for each of these breeds, and append them to breedSelect.
  *  - Each option should have a value attribute equal to the id of the breed.
  *  - Each option should display text equal to the name of the breed.
- * This function should execute immediately.
+ 
  */
 function initialLoad() {
   return _initialLoad.apply(this, arguments);
-}
+} //  * This function should execute immediately.
 function _initialLoad() {
   _initialLoad = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
     var response, jsonData;
@@ -12301,8 +12301,9 @@ function _initialLoad() {
             option.value = element.breeds[0].id;
             option.src = element.url;
             breedSelect.appendChild(option);
-            breedSelect.addEventListener("change", getCats);
-            // getCats()
+
+            // breedSelect.addEventListener("change", getCats);
+            getCats();
           });
         case 7:
         case "end":
@@ -12319,20 +12320,23 @@ initialLoad();
  *  - Make sure your request is receiving multiple array items!
  *  - Check the API documentation if you're only getting a single object.
  * - For each object in the response array, create a new element for the carousel.
- *  - Append each of these new elements to the carousel.
+ *  - Append each of these new elements to the carousel.**/
+function getCats() {
+  return _getCats.apply(this, arguments);
+}
+/*
  * - Use the other data you have been given to create an informational section within the infoDump element.
  *  - Be creative with how you create DOM elements and HTML.
  *  - Feel free to edit index.html and styles.css to suit your needs, but be careful!
  *  - Remember that functionality comes first, but user experience and design are important.
+ * */
+/*
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
-function getCats() {
-  return _getCats.apply(this, arguments);
-}
 function _getCats() {
   _getCats = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var catList;
+    var catList, breedInfo;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
@@ -12346,15 +12350,17 @@ function _getCats() {
           return catList.json();
         case 6:
           catList = _context2.sent;
-          console.log(catList);
+          breedInfo = catList;
           catList.forEach(function (cat) {
-            console.log(cat.url);
-            console.log(cat.breeds[0].id);
-            console.log(cat.id);
+            // console.log(cat.url);
+            // console.log(cat.breeds[0].id);
+            // console.log(cat.id);
             var card = Carousel.createCarouselItem(cat.url, cat.breeds[0].id, cat.id);
             Carousel.appendCarousel(card);
           });
-        case 9:
+          // console.log(breedInfo);
+          infoDump.innerHTML = "".concat(breedInfo[0].breeds[0].description);
+        case 10:
         case "end":
           return _context2.stop();
       }
@@ -12362,11 +12368,8 @@ function _getCats() {
   }));
   return _getCats.apply(this, arguments);
 }
-Carousel.clear();
-// Carousel.start();
-// breedSelect.addEventListener("DOMContentLoaded", async function () {
-//     Carousel.appendCarousel(cat);
-// });
+breedSelect.addEventListener("change", Carousel.clear);
+breedSelect.addEventListener("change", getCats);
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
