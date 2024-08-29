@@ -12276,44 +12276,29 @@ var API_KEY = "live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyz
  *  - Each option should display text equal to the name of the breed.
  
  */
-function initialLoad() {
-  return _initialLoad.apply(this, arguments);
-} //  * This function should execute immediately.
-function _initialLoad() {
-  _initialLoad = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var response, jsonData;
-    return _regeneratorRuntime().wrap(function _callee$(_context) {
-      while (1) switch (_context.prev = _context.next) {
-        case 0:
-          _context.next = 2;
-          return fetch("https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8");
-        case 2:
-          response = _context.sent;
-          _context.next = 5;
-          return response.json();
-        case 5:
-          jsonData = _context.sent;
-          // console.log(jsonData);
 
-          jsonData.forEach(function (element) {
-            var option = document.createElement("option");
-            option.text = element.breeds[0].name;
-            option.value = element.breeds[0].id;
-            option.src = element.url;
-            breedSelect.appendChild(option);
+// async function initialLoad() {
+//     const response = await fetch(
+//         "https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"
+//     );
+//     const jsonData = await response.json();
+//     // console.log(jsonData);
 
-            // breedSelect.addEventListener("change", getCats);
-            getCats();
-          });
-        case 7:
-        case "end":
-          return _context.stop();
-      }
-    }, _callee);
-  }));
-  return _initialLoad.apply(this, arguments);
-}
-initialLoad();
+//     jsonData.forEach((element) => {
+//         const option = document.createElement("option");
+//         option.text = element.breeds[0].name;
+//         option.value = element.breeds[0].id;
+//         option.src = element.url;
+
+//         breedSelect.appendChild(option);
+
+//         // breedSelect.addEventListener("change", getCats);
+//         getCats();
+//     });
+// }
+
+//  * This function should execute immediately.
+// initialLoad();
 /**
  * 2. Create an event handler for breedSelect that does the following:
  * - Retrieve information on the selected breed from the cat API using fetch().
@@ -12321,55 +12306,43 @@ initialLoad();
  *  - Check the API documentation if you're only getting a single object.
  * - For each object in the response array, create a new element for the carousel.
  *  - Append each of these new elements to the carousel.**/
-function getCats() {
-  return _getCats.apply(this, arguments);
-}
+// async function getCats() {
+//     console.log(breedSelect.value);
+//     // console.log(option.value);
+//     let catList = await fetch(
+//         `https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=${breedSelect.value}&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8`
+//     );
+//     catList = await catList.json();
+//     let breedInfo = catList;
+
+//     catList.forEach((cat) => {
+//         // console.log(cat.url);
+//         // console.log(cat.breeds[0].id);
+//         // console.log(cat.id);
+//         let card = Carousel.createCarouselItem(
+//             cat.url,
+//             cat.breeds[0].id,
+//             cat.id
+//         );
+//         Carousel.appendCarousel(card);
+//     });
+//     // console.log(breedInfo);
+//     infoDump.innerHTML = `${breedInfo[0].breeds[0].description}`;
+// }
+
 /*
  * - Use the other data you have been given to create an informational section within the infoDump element.
  *  - Be creative with how you create DOM elements and HTML.
  *  - Feel free to edit index.html and styles.css to suit your needs, but be careful!
  *  - Remember that functionality comes first, but user experience and design are important.
  * */
+
 /*
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
-function _getCats() {
-  _getCats = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var catList, breedInfo;
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
-        case 0:
-          console.log(breedSelect.value);
-          // console.log(option.value);
-          _context2.next = 3;
-          return fetch("https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=".concat(breedSelect.value, "&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"));
-        case 3:
-          catList = _context2.sent;
-          _context2.next = 6;
-          return catList.json();
-        case 6:
-          catList = _context2.sent;
-          breedInfo = catList;
-          catList.forEach(function (cat) {
-            // console.log(cat.url);
-            // console.log(cat.breeds[0].id);
-            // console.log(cat.id);
-            var card = Carousel.createCarouselItem(cat.url, cat.breeds[0].id, cat.id);
-            Carousel.appendCarousel(card);
-          });
-          // console.log(breedInfo);
-          infoDump.innerHTML = "".concat(breedInfo[0].breeds[0].description);
-        case 10:
-        case "end":
-          return _context2.stop();
-      }
-    }, _callee2);
-  }));
-  return _getCats.apply(this, arguments);
-}
-breedSelect.addEventListener("change", Carousel.clear);
-breedSelect.addEventListener("change", getCats);
+// breedSelect.addEventListener("change", Carousel.clear);
+// breedSelect.addEventListener("change", getCats);
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
@@ -12383,6 +12356,38 @@ breedSelect.addEventListener("change", getCats);
  *   by setting a default header with your API key so that you do not have to
  *   send it manually with all of your requests! You can also set a default base URL!
  */
+function initialLoad() {
+  return _initialLoad.apply(this, arguments);
+}
+function _initialLoad() {
+  _initialLoad = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          _axios.default.get("https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8").then(function (result) {
+            return console.log(result);
+          });
+
+          // jsonData.forEach((element) => {
+          //     const option = document.createElement("option");
+          //     option.text = element.breeds[0].name;
+          //     option.value = element.breeds[0].id;
+          //     option.src = element.url;
+
+          //     breedSelect.appendChild(option);
+
+          //     // breedSelect.addEventListener("change", getCats);
+          //     getCats();
+          // });
+        case 1:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return _initialLoad.apply(this, arguments);
+}
+initialLoad();
 /**
  * 5. Add axios interceptors to log the time between request and response to the console.
  * - Hint: you already have access to code that does this!
@@ -12442,14 +12447,14 @@ function favourite(_x) {
  *   your code should account for this.
  */
 function _favourite() {
-  _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(imgId) {
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-      while (1) switch (_context3.prev = _context3.next) {
+  _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(imgId) {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
         case 0:
         case "end":
-          return _context3.stop();
+          return _context2.stop();
       }
-    }, _callee3);
+    }, _callee2);
   }));
   return _favourite.apply(this, arguments);
 }

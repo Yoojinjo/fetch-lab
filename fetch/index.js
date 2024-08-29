@@ -23,28 +23,28 @@ const API_KEY =
  
  */
 
-// async function initialLoad() {
-//     const response = await fetch(
-//         "https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"
-//     );
-//     const jsonData = await response.json();
-//     // console.log(jsonData);
+async function initialLoad() {
+    const response = await fetch(
+        "https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"
+    );
+    const jsonData = await response.json();
+    // console.log(jsonData);
 
-//     jsonData.forEach((element) => {
-//         const option = document.createElement("option");
-//         option.text = element.breeds[0].name;
-//         option.value = element.breeds[0].id;
-//         option.src = element.url;
+    jsonData.forEach((element) => {
+        const option = document.createElement("option");
+        option.text = element.breeds[0].name;
+        option.value = element.breeds[0].id;
+        option.src = element.url;
 
-//         breedSelect.appendChild(option);
+        breedSelect.appendChild(option);
 
-//         // breedSelect.addEventListener("change", getCats);
-//         getCats();
-//     });
-// }
+        // breedSelect.addEventListener("change", getCats);
+        getCats();
+    });
+}
 
 //  * This function should execute immediately.
-// initialLoad();
+initialLoad();
 /**
  * 2. Create an event handler for breedSelect that does the following:
  * - Retrieve information on the selected breed from the cat API using fetch().
@@ -52,29 +52,29 @@ const API_KEY =
  *  - Check the API documentation if you're only getting a single object.
  * - For each object in the response array, create a new element for the carousel.
  *  - Append each of these new elements to the carousel.**/
-// async function getCats() {
-//     console.log(breedSelect.value);
-//     // console.log(option.value);
-//     let catList = await fetch(
-//         `https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=${breedSelect.value}&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8`
-//     );
-//     catList = await catList.json();
-//     let breedInfo = catList;
+async function getCats() {
+    console.log(breedSelect.value);
+    // console.log(option.value);
+    let catList = await fetch(
+        `https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=${breedSelect.value}&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8`
+    );
+    catList = await catList.json();
+    let breedInfo = catList;
 
-//     catList.forEach((cat) => {
-//         // console.log(cat.url);
-//         // console.log(cat.breeds[0].id);
-//         // console.log(cat.id);
-//         let card = Carousel.createCarouselItem(
-//             cat.url,
-//             cat.breeds[0].id,
-//             cat.id
-//         );
-//         Carousel.appendCarousel(card);
-//     });
-//     // console.log(breedInfo);
-//     infoDump.innerHTML = `${breedInfo[0].breeds[0].description}`;
-// }
+    catList.forEach((cat) => {
+        // console.log(cat.url);
+        // console.log(cat.breeds[0].id);
+        // console.log(cat.id);
+        let card = Carousel.createCarouselItem(
+            cat.url,
+            cat.breeds[0].id,
+            cat.id
+        );
+        Carousel.appendCarousel(card);
+    });
+    // console.log(breedInfo);
+    infoDump.innerHTML = `${breedInfo[0].breeds[0].description}`;
+}
 
 /*
  * - Use the other data you have been given to create an informational section within the infoDump element.
@@ -87,8 +87,8 @@ const API_KEY =
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
-// breedSelect.addEventListener("change", Carousel.clear);
-// breedSelect.addEventListener("change", getCats);
+breedSelect.addEventListener("change", Carousel.clear);
+breedSelect.addEventListener("change", getCats);
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
@@ -102,27 +102,6 @@ const API_KEY =
  *   by setting a default header with your API key so that you do not have to
  *   send it manually with all of your requests! You can also set a default base URL!
  */
-
-async function initialLoad() {
-    axios
-        .get(
-            "https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"
-        )
-        .then((result) => console.log(result));
-
-    // jsonData.forEach((element) => {
-    //     const option = document.createElement("option");
-    //     option.text = element.breeds[0].name;
-    //     option.value = element.breeds[0].id;
-    //     option.src = element.url;
-
-    //     breedSelect.appendChild(option);
-
-    //     // breedSelect.addEventListener("change", getCats);
-    //     getCats();
-    // });
-}
-initialLoad();
 /**
  * 5. Add axios interceptors to log the time between request and response to the console.
  * - Hint: you already have access to code that does this!
