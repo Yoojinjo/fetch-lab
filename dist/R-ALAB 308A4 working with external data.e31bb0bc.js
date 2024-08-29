@@ -12327,6 +12327,7 @@ var API_KEY = "live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyz
 //         Carousel.appendCarousel(card);
 //     });
 //     // console.log(breedInfo);
+// Carousel.start()
 //     infoDump.innerHTML = `${breedInfo[0].breeds[0].description}`;
 // }
 
@@ -12356,6 +12357,7 @@ var API_KEY = "live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyz
  *   by setting a default header with your API key so that you do not have to
  *   send it manually with all of your requests! You can also set a default base URL!
  */
+initialLoad();
 function initialLoad() {
   return _initialLoad.apply(this, arguments);
 }
@@ -12365,20 +12367,8 @@ function _initialLoad() {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _axios.default.get("https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8").then(function (result) {
-            return console.log(result);
+            dropdown(result);
           });
-
-          // jsonData.forEach((element) => {
-          //     const option = document.createElement("option");
-          //     option.text = element.breeds[0].name;
-          //     option.value = element.breeds[0].id;
-          //     option.src = element.url;
-
-          //     breedSelect.appendChild(option);
-
-          //     // breedSelect.addEventListener("change", getCats);
-          //     getCats();
-          // });
         case 1:
         case "end":
           return _context.stop();
@@ -12387,7 +12377,52 @@ function _initialLoad() {
   }));
   return _initialLoad.apply(this, arguments);
 }
-initialLoad();
+function dropdown(result) {
+  var breedList = result.data;
+  breedList.forEach(function (element) {
+    var option = document.createElement("option");
+    option.text = element.breeds[0].name;
+    option.value = element.breeds[0].id;
+    breedSelect.appendChild(option);
+    breedSelect.addEventListener("change", getCats);
+  });
+}
+function getCats() {
+  return _getCats.apply(this, arguments);
+}
+function _getCats() {
+  _getCats = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          console.log(breedSelect.value);
+          // console.log(option.value);
+          _axios.default.get("https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=".concat(breedSelect.value, "&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8")).then(function (result) {
+            return handleResult(result);
+          });
+        case 2:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2);
+  }));
+  return _getCats.apply(this, arguments);
+}
+function handleResult(result) {
+  var breedInfo = result.data;
+  breedInfo.forEach(function (cat) {
+    console.log(cat.url);
+    console.log(cat.breeds[0].id);
+    console.log(cat.id);
+    var card = Carousel.createCarouselItem(cat.url, cat.breeds[0].id, cat.id);
+    Carousel.appendCarousel(card);
+  });
+  console.log(breedInfo);
+  Carousel.start();
+  infoDump.innerHTML = "".concat(breedInfo[0].breeds[0].description);
+}
+breedSelect.addEventListener("change", Carousel.clear);
+breedSelect.addEventListener("change", getCats);
 /**
  * 5. Add axios interceptors to log the time between request and response to the console.
  * - Hint: you already have access to code that does this!
@@ -12447,14 +12482,14 @@ function favourite(_x) {
  *   your code should account for this.
  */
 function _favourite() {
-  _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(imgId) {
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
+  _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(imgId) {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
         case 0:
         case "end":
-          return _context2.stop();
+          return _context3.stop();
       }
-    }, _callee2);
+    }, _callee3);
   }));
   return _favourite.apply(this, arguments);
 }

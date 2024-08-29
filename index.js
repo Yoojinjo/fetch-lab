@@ -73,6 +73,7 @@ const API_KEY =
 //         Carousel.appendCarousel(card);
 //     });
 //     // console.log(breedInfo);
+// Carousel.start()
 //     infoDump.innerHTML = `${breedInfo[0].breeds[0].description}`;
 // }
 
@@ -102,27 +103,61 @@ const API_KEY =
  *   by setting a default header with your API key so that you do not have to
  *   send it manually with all of your requests! You can also set a default base URL!
  */
-
+initialLoad();
 async function initialLoad() {
     axios
         .get(
             "https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"
         )
-        .then((result) => console.log(result));
-
-    // jsonData.forEach((element) => {
-    //     const option = document.createElement("option");
-    //     option.text = element.breeds[0].name;
-    //     option.value = element.breeds[0].id;
-    //     option.src = element.url;
-
-    //     breedSelect.appendChild(option);
-
-    //     // breedSelect.addEventListener("change", getCats);
-    //     getCats();
-    // });
+        .then((result) => {
+            dropdown(result);
+        });
 }
-initialLoad();
+function dropdown(result) {
+    let breedList = result.data;
+
+    breedList.forEach((element) => {
+        const option = document.createElement("option");
+        option.text = element.breeds[0].name;
+        option.value = element.breeds[0].id;
+
+        breedSelect.appendChild(option);
+
+        breedSelect.addEventListener("change", getCats);
+    });
+}
+
+async function getCats() {
+    console.log(breedSelect.value);
+    // console.log(option.value);
+    axios
+        .get(
+            `https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=${breedSelect.value}&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8`
+        )
+        .then((result) => handleResult(result));
+}
+
+function handleResult(result) {
+    let breedInfo = result.data;
+
+    breedInfo.forEach((cat) => {
+        console.log(cat.url);
+        console.log(cat.breeds[0].id);
+        console.log(cat.id);
+        let card = Carousel.createCarouselItem(
+            cat.url,
+            cat.breeds[0].id,
+            cat.id
+        );
+        Carousel.appendCarousel(card);
+    });
+    console.log(breedInfo);
+    Carousel.start();
+    infoDump.innerHTML = `${breedInfo[0].breeds[0].description}`;
+}
+
+breedSelect.addEventListener("change", Carousel.clear);
+breedSelect.addEventListener("change", getCats);
 /**
  * 5. Add axios interceptors to log the time between request and response to the console.
  * - Hint: you already have access to code that does this!
