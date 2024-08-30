@@ -12368,6 +12368,8 @@ function _initialLoad() {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _axios.default.interceptors.request.use(function (request) {
+            console.log("Request Started.");
+            progressBar.style.width = "0%";
             request.metadata = request.metadata || {};
             request.metadata.startTime = new Date().getTime();
             return request;
@@ -12383,7 +12385,9 @@ function _initialLoad() {
             console.log("Request took ".concat(error.config.metadata.durationInMS, " milliseconds."));
             throw error;
           });
-          _axios.default.get("https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8").then(function (result) {
+          _axios.default.get("https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8", {
+            onDownloadProgress: updateProgress
+          }).then(function (result) {
             dropdown(result);
           }).catch(function (error) {
             return console.error(error);
@@ -12395,6 +12399,13 @@ function _initialLoad() {
     }, _callee);
   }));
   return _initialLoad.apply(this, arguments);
+}
+function updateProgress(progressEvent) {
+  console.log(progressEvent);
+  var total = progressEvent.total;
+  var current = progressEvent.loaded;
+  var percentage = current / total * 100;
+  progressBar.style.width = percentage + "%";
 }
 function dropdown(result) {
   var breedList = result.data;
@@ -12416,7 +12427,9 @@ function _getCats() {
         case 0:
           console.log(breedSelect.value);
           // console.log(option.value);
-          _axios.default.get("https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=".concat(breedSelect.value, "&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8")).then(function (result) {
+          _axios.default.get("https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=".concat(breedSelect.value, "&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"), {
+            onDownloadProgress: updateProgress
+          }).then(function (result) {
             return handleResult(result);
           }).catch(function (error) {
             return console.error(error);

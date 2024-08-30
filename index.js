@@ -108,6 +108,9 @@ initialLoad();
 
 async function initialLoad() {
     axios.interceptors.request.use((request) => {
+        console.log("Request Started.");
+        progressBar.style.width = "0%";
+
         request.metadata = request.metadata || {};
         request.metadata.startTime = new Date().getTime();
         return request;
@@ -139,13 +142,23 @@ async function initialLoad() {
 
     axios
         .get(
-            "https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"
+            "https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8",
+            { onDownloadProgress: updateProgress }
         )
         .then((result) => {
             dropdown(result);
         })
         .catch((error) => console.error(error));
 }
+
+function updateProgress(progressEvent) {
+    console.log(progressEvent);
+    var total = progressEvent.total;
+    var current = progressEvent.loaded;
+    var percentage = (current / total) * 100;
+    progressBar.style.width = percentage + "%";
+}
+
 function dropdown(result) {
     let breedList = result.data;
 
@@ -165,7 +178,8 @@ async function getCats() {
     // console.log(option.value);
     axios
         .get(
-            `https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=${breedSelect.value}&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8`
+            `https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=${breedSelect.value}&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8`,
+            { onDownloadProgress: updateProgress }
         )
         .then((result) => handleResult(result))
         .catch((error) => console.error(error));
