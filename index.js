@@ -111,7 +111,8 @@ async function initialLoad() {
         )
         .then((result) => {
             dropdown(result);
-        });
+        })
+        .catch((error) => console.error(error));
 }
 function dropdown(result) {
     let breedList = result.data;
@@ -134,7 +135,8 @@ async function getCats() {
         .get(
             `https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=${breedSelect.value}&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8`
         )
-        .then((result) => handleResult(result));
+        .then((result) => handleResult(result))
+        .catch((error) => console.error(error));
 }
 
 function handleResult(result) {

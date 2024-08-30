@@ -12368,6 +12368,8 @@ function _initialLoad() {
         case 0:
           _axios.default.get("https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8").then(function (result) {
             dropdown(result);
+          }).catch(function (error) {
+            return console.error(error);
           });
         case 1:
         case "end":
@@ -12399,6 +12401,8 @@ function _getCats() {
           // console.log(option.value);
           _axios.default.get("https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=".concat(breedSelect.value, "&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8")).then(function (result) {
             return handleResult(result);
+          }).catch(function (error) {
+            return console.error(error);
           });
         case 2:
         case "end":
@@ -12518,7 +12522,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58044" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59680" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
