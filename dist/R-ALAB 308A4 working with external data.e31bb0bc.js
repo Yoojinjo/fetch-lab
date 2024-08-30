@@ -12441,9 +12441,9 @@ function _getCats() {
 function handleResult(result) {
   var breedInfo = result.data;
   breedInfo.forEach(function (cat) {
-    console.log(cat.url);
-    console.log(cat.breeds[0].id);
-    console.log(cat.id);
+    // console.log(cat.url);
+    // console.log(cat.breeds[0].id);
+    // console.log(cat.id);
     var card = Carousel.createCarouselItem(cat.url, cat.breeds[0].id, cat.id);
     Carousel.appendCarousel(card);
   });
@@ -12499,6 +12499,7 @@ function updateProgress(progressEvent) {
  *   you delete that favourite using the API, giving this function "toggle" functionality.
  * - You can call this function by clicking on the heart at the top right of any image.
  */
+var favInfo;
 function favourite(_x) {
   return _favourite.apply(this, arguments);
 }
@@ -12513,21 +12514,31 @@ function favourite(_x) {
  */
 function _favourite() {
   _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(imgId) {
+    var i, heart;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
+          _axios.default.get("https://api.thecatapi.com/v1/favourites").then(function (result) {
+            favInfo = result.data;
+            console.log(favInfo);
+          });
+
+          // function toggleFav(favInfo, imgId, value, id)
+          // const favNum = favInfo.find(obj => obj[imgId] === value);
+          // return favNum
+
+          // Deleting Favourites WORK YET
+          for (i = 0; i < favInfo.length; i++) {
+            if (imgId === favInfo[i].image_id) {
+              _axios.default.delete("https://api.thecatapi.com/v1/favourites/".concat(favInfo[i].id));
+              heart = document.querySelector(".favourite-button");
+              heart.style.color = "red";
+            }
+          }
           _axios.default.post("https://api.thecatapi.com/v1/favourites", {
             image_id: imgId,
             sub_id: API_KEY
           });
-          console.log(imgId);
-
-          // Deleting Favourites DOESN"T WORK YET
-          _axios.default.delete("https://api.thecatapi.com/v1/favourites/:".concat(imgId), {
-            image_id: imgId,
-            sub_id: API_KEY
-          });
-
           // const favouriteId = "id-of-favourite-to-delete"
           // var requestOptions = {
           //     method: 'DELETE',
@@ -12562,12 +12573,12 @@ function _getFavourites() {
 }
 function favouriteResult(result) {
   Carousel.clear();
-  var favInfo = result.data;
+  favInfo = result.data;
   console.log(favInfo);
   favInfo.forEach(function (fav) {
-    console.log(fav.image.url);
-    console.log(fav.image_id);
-    console.log(fav.image_id);
+    // console.log(fav.image.url);
+    // console.log(fav.image_id);
+    // console.log(fav.image_id);
     var card = Carousel.createCarouselItem(fav.image.url, fav.image_id, fav.image_id);
     Carousel.appendCarousel(card);
   });

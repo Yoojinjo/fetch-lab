@@ -182,9 +182,9 @@ function handleResult(result) {
     let breedInfo = result.data;
 
     breedInfo.forEach((cat) => {
-        console.log(cat.url);
-        console.log(cat.breeds[0].id);
-        console.log(cat.id);
+        // console.log(cat.url);
+        // console.log(cat.breeds[0].id);
+        // console.log(cat.id);
         let card = Carousel.createCarouselItem(
             cat.url,
             cat.breeds[0].id,
@@ -245,19 +245,32 @@ function updateProgress(progressEvent) {
  *   you delete that favourite using the API, giving this function "toggle" functionality.
  * - You can call this function by clicking on the heart at the top right of any image.
  */
+let favInfo;
 export async function favourite(imgId) {
+    axios.get("https://api.thecatapi.com/v1/favourites").then((result) => {
+        favInfo = result.data;
+
+        console.log(favInfo);
+    });
+
+    // function toggleFav(favInfo, imgId, value, id)
+    // const favNum = favInfo.find(obj => obj[imgId] === value);
+    // return favNum
+
+    // Deleting Favourites WORK YET
+    for (let i = 0; i < favInfo.length; i++) {
+        if (imgId === favInfo[i].image_id) {
+            axios.delete(
+                `https://api.thecatapi.com/v1/favourites/${favInfo[i].id}`
+            );
+            let heart = document.querySelector(".favourite-button");
+            heart.style.color = "red";
+        }
+    }
     axios.post("https://api.thecatapi.com/v1/favourites", {
         image_id: imgId,
         sub_id: API_KEY,
     });
-    console.log(imgId);
-
-    // Deleting Favourites DOESN"T WORK YET
-    axios.delete(`https://api.thecatapi.com/v1/favourites/:${imgId}`, {
-        image_id: imgId,
-        sub_id: API_KEY,
-    });
-
     // const favouriteId = "id-of-favourite-to-delete"
     // var requestOptions = {
     //     method: 'DELETE',
@@ -283,12 +296,12 @@ async function getFavourites() {
 function favouriteResult(result) {
     Carousel.clear();
 
-    let favInfo = result.data;
+    favInfo = result.data;
     console.log(favInfo);
     favInfo.forEach((fav) => {
-        console.log(fav.image.url);
-        console.log(fav.image_id);
-        console.log(fav.image_id);
+        // console.log(fav.image.url);
+        // console.log(fav.image_id);
+        // console.log(fav.image_id);
         let card = Carousel.createCarouselItem(
             fav.image.url,
             fav.image_id,
