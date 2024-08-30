@@ -103,8 +103,40 @@ const API_KEY =
  *   by setting a default header with your API key so that you do not have to
  *   send it manually with all of your requests! You can also set a default base URL!
  */
+
 initialLoad();
+
 async function initialLoad() {
+    axios.interceptors.request.use((request) => {
+        request.metadata = request.metadata || {};
+        request.metadata.startTime = new Date().getTime();
+        return request;
+    });
+
+    axios.interceptors.response.use(
+        (response) => {
+            response.config.metadata.endTime = new Date().getTime();
+            response.config.metadata.durationInMS =
+                response.config.metadata.endTime -
+                response.config.metadata.startTime;
+
+            console.log(
+                `Request took ${response.config.metadata.durationInMS} milliseconds.`
+            );
+            return response;
+        },
+        (error) => {
+            error.config.metadata.endTime = new Date().getTime();
+            error.config.metadata.durationInMS =
+                error.config.metadata.endTime - error.config.metadata.startTime;
+
+            console.log(
+                `Request took ${error.config.metadata.durationInMS} milliseconds.`
+            );
+            throw error;
+        }
+    );
+
     axios
         .get(
             "https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1&api_key=live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyziik8"
