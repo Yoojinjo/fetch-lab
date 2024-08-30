@@ -162,6 +162,7 @@ function dropdown(result) {
         breedSelect.appendChild(option);
 
         breedSelect.addEventListener("change", getCats);
+        getCats();
     });
 }
 

@@ -12410,6 +12410,7 @@ function dropdown(result) {
     option.value = element.breeds[0].id;
     breedSelect.appendChild(option);
     breedSelect.addEventListener("change", getCats);
+    getCats();
   });
 }
 function getCats() {
