@@ -103,7 +103,7 @@ const API_KEY =
  *   by setting a default header with your API key so that you do not have to
  *   send it manually with all of your requests! You can also set a default base URL!
  */
-
+axios.defaults.headers.common["x-api-key"] = API_KEY;
 initialLoad();
 
 async function initialLoad() {
@@ -246,7 +246,11 @@ function updateProgress(progressEvent) {
  * - You can call this function by clicking on the heart at the top right of any image.
  */
 export async function favourite(imgId) {
-    // your code here
+    axios.post("https://api.thecatapi.com/v1/favourites", {
+        image_id: imgId,
+        sub_id: API_KEY,
+    });
+    console.log(imgId);
 }
 
 /**
@@ -258,6 +262,32 @@ export async function favourite(imgId) {
  *    If that isn't in its own function, maybe it should be so you don't have to
  *    repeat yourself in this section.
  */
+async function getFavourites() {
+    axios
+        .get("https://api.thecatapi.com/v1/favourites")
+        .then((result) => favouriteResult(result));
+}
+
+function favouriteResult(result) {
+    Carousel.clear();
+
+    let favInfo = result.data;
+    console.log(favInfo);
+    favInfo.forEach((fav) => {
+        console.log(fav.image.url);
+        console.log(fav.image_id);
+        console.log(fav.image_id);
+        let card = Carousel.createCarouselItem(
+            fav.image.url,
+            fav.image_id,
+            fav.image_id
+        );
+        Carousel.appendCarousel(card);
+    });
+    Carousel.start();
+}
+
+getFavouritesBtn.addEventListener("click", getFavourites);
 
 /**
  * 10. Test your site, thoroughly!

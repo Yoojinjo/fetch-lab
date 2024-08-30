@@ -12357,7 +12357,7 @@ var API_KEY = "live_YFnrorgiYYm2zDAXebd9fRmy5IBUjsjBsCUkdB1uFfPAxI2slUx346TGwLyz
  *   by setting a default header with your API key so that you do not have to
  *   send it manually with all of your requests! You can also set a default base URL!
  */
-
+_axios.default.defaults.headers.common["x-api-key"] = API_KEY;
 initialLoad();
 function initialLoad() {
   return _initialLoad.apply(this, arguments);
@@ -12511,18 +12511,17 @@ function favourite(_x) {
  *    If that isn't in its own function, maybe it should be so you don't have to
  *    repeat yourself in this section.
  */
-/**
- * 10. Test your site, thoroughly!
- * - What happens when you try to load the Malayan breed?
- *  - If this is working, good job! If not, look for the reason why and fix it!
- * - Test other breeds as well. Not every breed has the same data available, so
- *   your code should account for this.
- */
 function _favourite() {
   _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(imgId) {
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
+          _axios.default.post("https://api.thecatapi.com/v1/favourites", {
+            image_id: imgId,
+            sub_id: API_KEY
+          });
+          console.log(imgId);
+        case 2:
         case "end":
           return _context3.stop();
       }
@@ -12530,6 +12529,47 @@ function _favourite() {
   }));
   return _favourite.apply(this, arguments);
 }
+function getFavourites() {
+  return _getFavourites.apply(this, arguments);
+}
+function _getFavourites() {
+  _getFavourites = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
+        case 0:
+          _axios.default.get("https://api.thecatapi.com/v1/favourites").then(function (result) {
+            return favouriteResult(result);
+          });
+        case 1:
+        case "end":
+          return _context4.stop();
+      }
+    }, _callee4);
+  }));
+  return _getFavourites.apply(this, arguments);
+}
+function favouriteResult(result) {
+  Carousel.clear();
+  var favInfo = result.data;
+  console.log(favInfo);
+  favInfo.forEach(function (fav) {
+    console.log(fav.image.url);
+    console.log(fav.image_id);
+    console.log(fav.image_id);
+    var card = Carousel.createCarouselItem(fav.image.url, fav.image_id, fav.image_id);
+    Carousel.appendCarousel(card);
+  });
+  Carousel.start();
+}
+getFavouritesBtn.addEventListener("click", getFavourites);
+
+/**
+ * 10. Test your site, thoroughly!
+ * - What happens when you try to load the Malayan breed?
+ *  - If this is working, good job! If not, look for the reason why and fix it!
+ * - Test other breeds as well. Not every breed has the same data available, so
+ *   your code should account for this.
+ */
 },{"./Carousel.js":"Carousel.js","axios":"node_modules/axios/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
