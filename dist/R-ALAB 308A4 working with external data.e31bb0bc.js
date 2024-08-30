@@ -12521,7 +12521,19 @@ function _favourite() {
             sub_id: API_KEY
           });
           console.log(imgId);
-        case 2:
+
+          // Deleting Favourites DOESN"T WORK YET
+          _axios.default.delete("https://api.thecatapi.com/v1/favourites/:".concat(imgId), {
+            image_id: imgId,
+            sub_id: API_KEY
+          });
+
+          // const favouriteId = "id-of-favourite-to-delete"
+          // var requestOptions = {
+          //     method: 'DELETE',
+          //     headers
+          // };
+        case 3:
         case "end":
           return _context3.stop();
       }

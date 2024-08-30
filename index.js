@@ -251,6 +251,18 @@ export async function favourite(imgId) {
         sub_id: API_KEY,
     });
     console.log(imgId);
+
+    // Deleting Favourites DOESN"T WORK YET
+    axios.delete(`https://api.thecatapi.com/v1/favourites/:${imgId}`, {
+        image_id: imgId,
+        sub_id: API_KEY,
+    });
+
+    // const favouriteId = "id-of-favourite-to-delete"
+    // var requestOptions = {
+    //     method: 'DELETE',
+    //     headers
+    // };
 }
 
 /**
