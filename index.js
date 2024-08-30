@@ -110,7 +110,7 @@ async function initialLoad() {
     axios.interceptors.request.use((request) => {
         console.log("Request Started.");
         progressBar.style.width = "0%";
-
+        document.body.style.cursor = "progress";
         request.metadata = request.metadata || {};
         request.metadata.startTime = new Date().getTime();
         return request;
@@ -122,7 +122,7 @@ async function initialLoad() {
             response.config.metadata.durationInMS =
                 response.config.metadata.endTime -
                 response.config.metadata.startTime;
-
+            document.body.style.cursor = "default";
             console.log(
                 `Request took ${response.config.metadata.durationInMS} milliseconds.`
             );
@@ -149,14 +149,6 @@ async function initialLoad() {
             dropdown(result);
         })
         .catch((error) => console.error(error));
-}
-
-function updateProgress(progressEvent) {
-    console.log(progressEvent);
-    var total = progressEvent.total;
-    var current = progressEvent.loaded;
-    var percentage = (current / total) * 100;
-    progressBar.style.width = percentage + "%";
 }
 
 function dropdown(result) {
@@ -228,6 +220,13 @@ breedSelect.addEventListener("change", getCats);
  *   once or twice per request to this API. This is still a concept worth familiarizing yourself
  *   with for future projects.
  */
+function updateProgress(progressEvent) {
+    console.log(progressEvent);
+    var total = progressEvent.total;
+    var current = progressEvent.loaded;
+    var percentage = (current / total) * 100;
+    progressBar.style.width = percentage + "%";
+}
 
 /**
  * 7. As a final element of progress indication, add the following to your axios interceptors:
