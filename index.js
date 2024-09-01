@@ -247,11 +247,13 @@ function updateProgress(progressEvent) {
  */
 let favInfo;
 export async function favourite(imgId) {
-    axios.get("https://api.thecatapi.com/v1/favourites").then((result) => {
-        favInfo = result.data;
-
-        console.log(favInfo);
-    });
+    axios
+        .get("https://api.thecatapi.com/v1/favourites")
+        .then((result) => {
+            favInfo = result.data;
+            console.log(favInfo);
+        })
+        .catch((error) => console.error(error));
 
     // function toggleFav(favInfo, imgId, value, id)
     // const favNum = favInfo.find(obj => obj[imgId] === value);
@@ -260,17 +262,20 @@ export async function favourite(imgId) {
     // Deleting Favourites WORK YET
     for (let i = 0; i < favInfo.length; i++) {
         if (imgId === favInfo[i].image_id) {
-            axios.delete(
-                `https://api.thecatapi.com/v1/favourites/${favInfo[i].id}`
-            );
-            let heart = document.querySelector(".favourite-button");
-            heart.style.color = "red";
+            axios
+                .delete(
+                    `https://api.thecatapi.com/v1/favourites/${favInfo[i].id}`
+                )
+                .catch((error) => console.error(error));
+            getFavourites();
         }
     }
-    axios.post("https://api.thecatapi.com/v1/favourites", {
-        image_id: imgId,
-        sub_id: API_KEY,
-    });
+    axios
+        .post("https://api.thecatapi.com/v1/favourites", {
+            image_id: imgId,
+            sub_id: API_KEY,
+        })
+        .catch((error) => console.error(error));
     // const favouriteId = "id-of-favourite-to-delete"
     // var requestOptions = {
     //     method: 'DELETE',
@@ -287,6 +292,7 @@ export async function favourite(imgId) {
  *    If that isn't in its own function, maybe it should be so you don't have to
  *    repeat yourself in this section.
  */
+
 async function getFavourites() {
     axios
         .get("https://api.thecatapi.com/v1/favourites")

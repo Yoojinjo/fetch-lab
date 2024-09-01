@@ -12514,13 +12514,15 @@ function favourite(_x) {
  */
 function _favourite() {
   _favourite = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(imgId) {
-    var i, heart;
+    var i;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           _axios.default.get("https://api.thecatapi.com/v1/favourites").then(function (result) {
             favInfo = result.data;
             console.log(favInfo);
+          }).catch(function (error) {
+            return console.error(error);
           });
 
           // function toggleFav(favInfo, imgId, value, id)
@@ -12530,14 +12532,17 @@ function _favourite() {
           // Deleting Favourites WORK YET
           for (i = 0; i < favInfo.length; i++) {
             if (imgId === favInfo[i].image_id) {
-              _axios.default.delete("https://api.thecatapi.com/v1/favourites/".concat(favInfo[i].id));
-              heart = document.querySelector(".favourite-button");
-              heart.style.color = "red";
+              _axios.default.delete("https://api.thecatapi.com/v1/favourites/".concat(favInfo[i].id)).catch(function (error) {
+                return console.error(error);
+              });
+              getFavourites();
             }
           }
           _axios.default.post("https://api.thecatapi.com/v1/favourites", {
             image_id: imgId,
             sub_id: API_KEY
+          }).catch(function (error) {
+            return console.error(error);
           });
           // const favouriteId = "id-of-favourite-to-delete"
           // var requestOptions = {
